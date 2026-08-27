@@ -1,9 +1,12 @@
 package boot
 
-import "go.uber.org/fx"
+import (
+	"github.com/frostgrove/vv-template/src/app/product"
+	"go.uber.org/fx"
+)
 
 func appOptions() fx.Option {
 	return fx.Options(
-	// register your app containers here
+		product.Module(),
 	)
 }

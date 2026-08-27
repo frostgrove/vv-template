@@ -18,8 +18,11 @@ infra:
     user: app
     password: secret
     name: app
+    sslmode: disable
+    params:
+      timezone: UTC
 
-    migration: 
+    migration:
       path: resources/migrations
 
 clients:

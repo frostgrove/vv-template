@@ -14,3 +14,8 @@ type Product struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+type ProductImage struct {
+	Id   uuid.UUID
+	Path string
+}

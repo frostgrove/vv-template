@@ -3,7 +3,12 @@ module github.com/frostgrove/vv-template
 go 1.26.5
 
 require (
+	github.com/frostgrove/vv v0.0.0-20260827101522-0cd9a2220038
+	github.com/frostgrove/vv/utils/vvcfg v0.0.0-20260827073301-3e99dec2bfc5
+	github.com/frostgrove/vv/utils/vvgoose v0.0.0-20260827111007-82f77fd2c179
 	github.com/gofiber/fiber/v3 v3.4.0
+	github.com/google/uuid v1.6.0
+	github.com/jackc/pgx/v5 v5.10.0
 	go.opentelemetry.io/contrib/bridges/otelslog v0.13.0
 	go.opentelemetry.io/otel/exporters/stdout/stdoutlog v0.14.0
 	go.opentelemetry.io/otel/sdk/log v0.14.0
@@ -30,21 +35,15 @@ require (
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
-	github.com/frostgrove/vv v0.0.0-20260827073301-3e99dec2bfc5 // indirect
-	github.com/frostgrove/vv/crud/adapter/crudpgx v0.0.0-20260827073301-3e99dec2bfc5 // indirect
-	github.com/frostgrove/vv/utils/vvcfg v0.0.0-20260827073301-3e99dec2bfc5 // indirect
-	github.com/frostgrove/vv/utils/vvgoose v0.0.0-20260827073529-079c86c62abe // indirect
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-sql-driver/mysql v1.10.0 // indirect
 	github.com/gofiber/schema v1.8.3 // indirect
 	github.com/gofiber/utils/v2 v2.4.1 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/ilyakaznacheev/cleanenv v1.5.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.10.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
