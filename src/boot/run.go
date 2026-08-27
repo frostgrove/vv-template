@@ -1,0 +1,12 @@
+package boot
+
+import "go.uber.org/fx"
+
+func Run() {
+	app := fx.New(
+		coreOptions(),
+		appOptions(),
+	)
+
+	app.Run()
+}
