@@ -1,5 +1,5 @@
 -- +goose Up
-CREATE TABLE "products" (
+CREATE TABLE IF NOT EXISTS "products" (
     "id" UUID PRIMARY KEY,
     "name" TEXT NOT NULL,
     "description" TEXT,
@@ -7,7 +7,7 @@ CREATE TABLE "products" (
     "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
-CREATE TABLE "product_images" (
+CREATE TABLE IF NOT EXISTS "product_images" (
     "id" UUID PRIMARY KEY,
     "path" TEXT NOT NULL
 );

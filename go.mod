@@ -3,9 +3,9 @@ module github.com/frostgrove/vv-template
 go 1.26.5
 
 require (
-	github.com/frostgrove/vv v0.0.0-20260827101522-0cd9a2220038
+	github.com/frostgrove/vv v0.0.0-20260828074204-4db93d488bc3
 	github.com/frostgrove/vv/utils/vvcfg v0.0.0-20260827073301-3e99dec2bfc5
-	github.com/frostgrove/vv/utils/vvgoose v0.0.0-20260827111007-82f77fd2c179
+	github.com/frostgrove/vv/utils/vvgoose v0.0.0-20260827113418-25ef49e166f2
 	github.com/gofiber/fiber/v3 v3.4.0
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.10.0
@@ -35,6 +35,7 @@ require (
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
+	github.com/frostgrove/vv/crud/http/crudfiber v0.0.0-20260828054519-1c8f6cfc7dcc // indirect
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-sql-driver/mysql v1.10.0 // indirect

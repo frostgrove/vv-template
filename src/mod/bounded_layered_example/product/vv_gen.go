@@ -7,18 +7,19 @@ import (
 	"github.com/frostgrove/vv/crud/decorators/specs"
 	"github.com/frostgrove/vv/crud/sqlrepo"
 	"github.com/frostgrove/vv/port"
+	"github.com/frostgrove/vv/utils"
 	"github.com/google/uuid"
 	"time"
 )
 
 // ProductUpdate is the partial-update DTO for Product.
-// A pointer field is optional; a crud.Opt field is optional and nullable,
+// A pointer field is optional; a utils.Opt field is optional and nullable,
 // so an absent key, an explicit null and a value stay three different things.
 type ProductUpdate struct {
-	Name        *string          `json:"name,omitempty"`
-	Description crud.Opt[string] `json:"description,omitzero"`
-	CreatedAt   *time.Time       `json:"createdAt,omitempty"`
-	UpdatedAt   *time.Time       `json:"updatedAt,omitempty"`
+	Name        *string           `json:"name,omitempty"`
+	Description utils.Opt[string] `json:"description,omitzero"`
+	CreatedAt   *time.Time        `json:"createdAt,omitempty"`
+	UpdatedAt   *time.Time        `json:"updatedAt,omitempty"`
 }
 
 // ProductAttrs is the generated metamodel shape for Product.
@@ -43,12 +44,11 @@ var ProductRepository = sqlrepo.Define[Product, uuid.UUID, ProductUpdate]("")
 
 // NewProductRepository binds ProductRepository to src.
 func NewProductRepository(src crud.Source) *ProductRepo {
-	repo := ProductRepository.Bind(src)
-	return &repo
+	return ProductRepository.Bind(src)
 }
 
 // ProductImageUpdate is the partial-update DTO for ProductImage.
-// A pointer field is optional; a crud.Opt field is optional and nullable,
+// A pointer field is optional; a utils.Opt field is optional and nullable,
 // so an absent key, an explicit null and a value stay three different things.
 type ProductImageUpdate struct {
 	Path *string `json:"path,omitempty"`
@@ -73,8 +73,7 @@ var ProductImageRepository = sqlrepo.Define[ProductImage, uuid.UUID, ProductImag
 
 // NewProductImageRepository binds ProductImageRepository to src.
 func NewProductImageRepository(src crud.Source) *ProductImageRepo {
-	repo := ProductImageRepository.Bind(src)
-	return &repo
+	return ProductImageRepository.Bind(src)
 }
 
 // A writable column the update DTO does not name refuses to start, rather than
