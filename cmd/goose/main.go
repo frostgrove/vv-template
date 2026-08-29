@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	cfg := vvcfg.MustLoad[config.Config]()
-	vvgoose.Execute(cfg.Infra.Db)
+	configuration := vvcfg.MustLoad[config.Config]()
+	vvgoose.Execute(configuration.Infra.Db)
 }

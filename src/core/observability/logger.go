@@ -9,8 +9,8 @@ import (
 	"go.opentelemetry.io/otel/sdk/log"
 )
 
-func MustCreateStdLogger(cfg *config.Config) *slog.Logger {
-	logger, err := NewStdLogger(cfg)
+func MustCreateStdLogger(configuration *config.Config) *slog.Logger {
+	logger, err := NewStdLogger(configuration)
 	if err != nil {
 		panic(err)
 	}
@@ -18,7 +18,7 @@ func MustCreateStdLogger(cfg *config.Config) *slog.Logger {
 	return logger
 }
 
-func NewStdLogger(cfg *config.Config) (*slog.Logger, error) {
+func NewStdLogger(configuration *config.Config) (*slog.Logger, error) {
 	exporter, err := stdoutlog.New()
 	if err != nil {
 		return nil, err

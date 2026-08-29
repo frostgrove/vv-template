@@ -26,8 +26,8 @@ func Register() fx.Option {
 	)
 }
 
-func Open(cfg *config.Config, lc fx.Lifecycle) (*sql.DB, error) {
-	db, err := vvdb.Open(cfg.Infra.Db)
+func Open(configuration *config.Config, lifecycle fx.Lifecycle) (*sql.DB, error) {
+	db, err := vvdb.Open(configuration.Infra.Db)
 	if err != nil {
 		return nil, err
 	}
@@ -35,14 +35,14 @@ func Open(cfg *config.Config, lc fx.Lifecycle) (*sql.DB, error) {
 		_ = db.Close()
 		return nil, fmt.Errorf("connecting to database: %w", err)
 	}
-	lc.Append(fx.Hook{
+	lifecycle.Append(fx.Hook{
 		OnStop: func(context.Context) error { return db.Close() },
 	})
 	return db, nil
 }
 
-func Source(cfg *config.Config, db *sql.DB) (crud.Source, error) {
-	switch cfg.Infra.Db.Engine {
+func Source(configuration *config.Config, db *sql.DB) (crud.Source, error) {
+	switch configuration.Infra.Db.Engine {
 	case vvdb.Postgres:
 		return crudsql.Postgres(db), nil
 	case vvdb.MySQL:
@@ -52,6 +52,6 @@ func Source(cfg *config.Config, db *sql.DB) (crud.Source, error) {
 	case vvdb.SQLite:
 		return crudsql.SQLite(db), nil
 	default:
-		return nil, fmt.Errorf("unsupported database engine %q", cfg.Infra.Db.Engine)
+		return nil, fmt.Errorf("unsupported database engine %q", configuration.Infra.Db.Engine)
 	}
 }

@@ -10,8 +10,8 @@ import (
 func Register() fx.Option {
 	return fx.Options(
 		fx.Provide(
-			func(cfg *config.Config) *slog.Logger {
-				return MustCreateStdLogger(cfg)
+			func(configuration *config.Config) *slog.Logger {
+				return MustCreateStdLogger(configuration)
 			},
 		),
 	)

@@ -12,9 +12,9 @@ func Module() fx.Option {
 		fx.Provide(NewProductRepository),
 
 		fx.Invoke(
-			func(repo *ProductRepo, router *fiber.App) {
-				var exec = specs.Executor(repo)
-				router.Use("/products", crudfiber.New(exec).Routes())
+			func(productRepository *ProductRepo, router *fiber.App) {
+				var executor = specs.Executor(productRepository)
+				router.Use("/products", crudfiber.New(executor).Routes())
 			},
 		),
 	)

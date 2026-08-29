@@ -42,9 +42,9 @@ type ProductRepo = crud.Repo[Product, uuid.UUID, ProductUpdate]
 // Bind it through NewProductRepository with the application's datasource.
 var ProductRepository = sqlrepo.Define[Product, uuid.UUID, ProductUpdate]("")
 
-// NewProductRepository binds ProductRepository to src.
-func NewProductRepository(src crud.Source) *ProductRepo {
-	return ProductRepository.Bind(src)
+// NewProductRepository binds ProductRepository to source.
+func NewProductRepository(source crud.Source) *ProductRepo {
+	return ProductRepository.Bind(source)
 }
 
 // ProductImageUpdate is the partial-update DTO for ProductImage.
@@ -71,9 +71,9 @@ type ProductImageRepo = crud.Repo[ProductImage, uuid.UUID, ProductImageUpdate]
 // Bind it through NewProductImageRepository with the application's datasource.
 var ProductImageRepository = sqlrepo.Define[ProductImage, uuid.UUID, ProductImageUpdate]("")
 
-// NewProductImageRepository binds ProductImageRepository to src.
-func NewProductImageRepository(src crud.Source) *ProductImageRepo {
-	return ProductImageRepository.Bind(src)
+// NewProductImageRepository binds ProductImageRepository to source.
+func NewProductImageRepository(source crud.Source) *ProductImageRepo {
+	return ProductImageRepository.Bind(source)
 }
 
 // A writable column the update DTO does not name refuses to start, rather than
