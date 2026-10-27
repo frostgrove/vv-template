@@ -4,10 +4,16 @@ services:
     environment:
       POSTGRES_PASSWORD: secret
       POSTGRES_USER: app
+      POSTGRES_DB: app
     ports:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d app"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
 
 volumes:
   postgres_data:

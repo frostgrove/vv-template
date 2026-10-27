@@ -1,2 +1,6 @@
 /config/*
 !/config/example.yml
+
+# A local workspace over a framework checkout (make workspace) is personal.
+/go.work
+/go.work.sum

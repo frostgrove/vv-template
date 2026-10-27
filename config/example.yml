@@ -1,29 +1,55 @@
+# Copy to config/app.yml (git-ignored) and adjust. Loading is strict: a key no
+# field declares refuses the start (vvcfg, D-086). Every scalar can also come
+# from the environment variable named in src/config/config.go.
 app:
-  name: FROSTGROVE_VV_TEMPLATE
+  name: vv-template
+  env: dev            # dev | test | staging | prod — selects seeders
+  profile: complete   # complete (api + workers) | serving (api) | working (workers)
 
 transports:
   fiber:
-    port: 8000
+    addr: ":8009"
+    prefix: /api
     allow_origins:
       - "http://localhost:3000"
       - "http://localhost:3001"
-    prefork: false
+    # Development keys only (header X-Api-Key). Production: a hashed key store,
+    # JWT (auth/authjwt) or auth/access instead.
+    api_keys:
+      - key: dev-admin-key
+        subject: dev-admin
+        permissions:
+          - product:read
+          - product:write
+          - product:delete
+          - example:read
+          - example:write
+          - health:detail
+      - key: dev-reader-key
+        subject: dev-reader
+        permissions:
+          - product:read
+          - example:read
 
 infra:
   db:
     engine: postgres
-    driver: pgx
     host: localhost
     port: 5432
     user: app
     password: secret
     name: app
-    sslmode: disable
+    sslmode: disable    # local development only; omitted means verify-full (D-081)
     params:
       timezone: UTC
-
+    pool:
+      max_open: 10
+      max_idle: 5
+      connect_timeout: 5s
     migration:
       path: resources/migrations
+      models:
+        - ./src
 
 clients:
   # put external service configs here (e.g. payment_api, notification_api)
@@ -33,4 +59,10 @@ internal:
 
 observability:
   logger:
-    name: "app-logger"
+    level: info         # debug | info | warn | error
+    format: text        # text | json
+  otel:
+    enabled: false      # true: OTLP/gRPC export of traces and metrics
+    endpoint: localhost:4317   # empty: OTEL_EXPORTER_OTLP_* decide
+    insecure: true
+    sample_ratio: 1
