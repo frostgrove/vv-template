@@ -8,21 +8,15 @@ import (
 	"github.com/frostgrove/vv/crud/sqlrepo"
 	"github.com/frostgrove/vv/port"
 	"github.com/frostgrove/vv/utils"
-	"github.com/google/uuid"
+	uuid "github.com/google/uuid"
 	"time"
 )
 
-// ProductUpdate is the partial-update DTO for Product.
-// A pointer field is optional; a utils.Opt field is optional and nullable,
-// so an absent key, an explicit null and a value stay three different things.
 type ProductUpdate struct {
 	Name        *string           `json:"name,omitempty"`
 	Description utils.Opt[string] `json:"description,omitzero"`
-	CreatedAt   *time.Time        `json:"createdAt,omitempty"`
-	UpdatedAt   *time.Time        `json:"updatedAt,omitempty"`
 }
 
-// ProductAttrs is the generated metamodel shape for Product.
 type ProductAttrs struct {
 	Id          specs.Attr[Product, uuid.UUID]
 	Name        specs.Str[Product]
@@ -31,56 +25,35 @@ type ProductAttrs struct {
 	UpdatedAt   specs.Cmp[Product, time.Time]
 }
 
-// Product_ is the metamodel of Product: typed, path-aware field references.
-// It is validated against the model at package initialisation.
 var Product_ = specs.Metamodel[Product, ProductAttrs]()
 
-// ProductRepo is the typed repository for Product.
 type ProductRepo = crud.Repo[Product, uuid.UUID, ProductUpdate]
 
-// ProductRepository describes Product independently of a database driver.
-// Bind it through NewProductRepository with the application's datasource.
 var ProductRepository = sqlrepo.Define[Product, uuid.UUID, ProductUpdate]("")
 
-// NewProductRepository binds ProductRepository to source.
-func NewProductRepository(source crud.Source) *ProductRepo {
-	return ProductRepository.Bind(source)
+func NewProductRepository(src crud.Source) *ProductRepo {
+	return ProductRepository.Bind(src)
 }
 
-// ProductImageUpdate is the partial-update DTO for ProductImage.
-// A pointer field is optional; a utils.Opt field is optional and nullable,
-// so an absent key, an explicit null and a value stay three different things.
 type ProductImageUpdate struct {
 	Path *string `json:"path,omitempty"`
 }
 
-// ProductImageAttrs is the generated metamodel shape for ProductImage.
 type ProductImageAttrs struct {
 	Id   specs.Attr[ProductImage, uuid.UUID]
 	Path specs.Str[ProductImage]
 }
 
-// ProductImage_ is the metamodel of ProductImage: typed, path-aware field references.
-// It is validated against the model at package initialisation.
 var ProductImage_ = specs.Metamodel[ProductImage, ProductImageAttrs]()
 
-// ProductImageRepo is the typed repository for ProductImage.
 type ProductImageRepo = crud.Repo[ProductImage, uuid.UUID, ProductImageUpdate]
 
-// ProductImageRepository describes ProductImage independently of a database driver.
-// Bind it through NewProductImageRepository with the application's datasource.
 var ProductImageRepository = sqlrepo.Define[ProductImage, uuid.UUID, ProductImageUpdate]("")
 
-// NewProductImageRepository binds ProductImageRepository to source.
-func NewProductImageRepository(source crud.Source) *ProductImageRepo {
-	return ProductImageRepository.Bind(source)
+func NewProductImageRepository(src crud.Source) *ProductImageRepo {
+	return ProductImageRepository.Bind(src)
 }
 
-// A writable column the update DTO does not name refuses to start, rather than
-// becoming a column updates silently cannot reach ([[D-050]]). The generator
-// read the model's source text and this reads the compiled struct, so the two
-// can drift apart — and this is what says so when they do, with nothing
-// regenerated.
 func init() {
 	port.MustCoverUpdate[Product, ProductUpdate]()
 	port.MustCoverUpdate[ProductImage, ProductImageUpdate]()

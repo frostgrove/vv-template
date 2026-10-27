@@ -1,8 +1,9 @@
 package domain
 
 import (
+	"time"
+
 	"github.com/google/uuid"
-	"google.golang.org/genproto/googleapis/type/datetime"
 )
 
 type TrackingMode string
@@ -30,7 +31,7 @@ type VendorStockItem struct {
 	Vendor    Vendor
 }
 
-type StockItemAviability struct {
+type StockItemAvailability struct {
 	Id                uuid.UUID
 	VendorStockItemId uuid.UUID
 	WarehouseId       uuid.UUID
@@ -39,9 +40,9 @@ type StockItemAviability struct {
 	VendorStockItem VendorStockItem
 }
 
-type StockItemAviabilityInstance struct {
+type StockItemAvailabilityInstance struct {
 	Id        uuid.UUID
-	ExpiresAt datetime.DateTime
+	ExpiresAt time.Time
 }
 
 type Warehouse struct {

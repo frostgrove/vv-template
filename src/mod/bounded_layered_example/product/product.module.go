@@ -1,21 +1,19 @@
 package product
 
 import (
-	"github.com/frostgrove/vv/crud/decorators/specs"
-	"github.com/frostgrove/vv/crud/http/crudfiber"
-	"github.com/gofiber/fiber/v3"
-	"go.uber.org/fx"
+	"github.com/frostgrove/vv/app/appfx"
+	"github.com/frostgrove/vv/app/http/appfiber"
+	"github.com/frostgrove/vv/app/module"
 )
 
-func Module() fx.Option {
-	return fx.Options(
-		fx.Provide(NewProductRepository),
-
-		fx.Invoke(
-			func(productRepository *ProductRepo, router *fiber.App) {
-				var executor = specs.Executor(productRepository)
-				router.Use("/products", crudfiber.New(executor).Routes())
-			},
-		),
-	)
+// Module is everything this bounded context contributes, filed by role. The
+// profile decides what of it a process wires: an API replica mounts the routes,
+// the seed command runs the seeder, every process gets the repositories.
+func Module() module.Definition {
+	return module.New("product").
+		Order(100).
+		Provide(NewProductRepository, NewProductImageRepository).
+		Routes(appfiber.AsRoute(NewHttpHandler)).
+		Seeders(appfx.AsSeeder(NewDemoSeeder)).
+		MustBuild()
 }

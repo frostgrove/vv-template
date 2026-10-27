@@ -1,24 +1,31 @@
 package boot
 
 import (
-	"github.com/frostgrove/vv-template/src/config"
-	"github.com/frostgrove/vv-template/src/core/database"
-	"github.com/frostgrove/vv-template/src/core/observability"
-	http_server_module "github.com/frostgrove/vv-template/src/transports/http"
+	"log/slog"
+
+	"github.com/frostgrove/vv/runtime/runtimefx"
 	"github.com/frostgrove/vv/utils/vvcfg"
 	"go.uber.org/fx"
+
+	"github.com/frostgrove/vv-template/src/config"
+	"github.com/frostgrove/vv-template/src/core/auth"
+	"github.com/frostgrove/vv-template/src/core/database"
+	"github.com/frostgrove/vv-template/src/core/observability"
 )
 
-func coreOptions() fx.Option {
+// coreOptions is the infrastructure every process of this service shares,
+// whatever its profile: configuration, logging and telemetry, the database
+// and the supervisor of background runners (D-092).
+func coreOptions(configuration *config.Config, report *vvcfg.Report) fx.Option {
 	return fx.Options(
-		fx.Provide(
-			vvcfg.MustLoad[config.Config],
-		),
-
+		fx.Supply(configuration),
 		observability.Register(),
-
-		database.Register(),
-
-		http_server_module.Register(),
+		fx.Invoke(func(logger *slog.Logger) {
+			logger.Info("configuration loaded",
+				slog.String("path", report.Path), slog.String("from", report.PathOrigin.String()))
+		}),
+		database.Register(configuration),
+		auth.Register(),
+		runtimefx.Auto(),
 	)
 }
